@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/flor-3.css" />
+    <link rel="stylesheet" href="css/music.css" />
+    <link rel="stylesheet" href="css/mensaje.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>flor3</title>
+  </head>
+
+  <body>
+    <div class="modal active" id="modal">
+        <div class="modal-content">
+          <span class="close-btn" id="closeModal">&times;</span>
+          <h1>Para mis Flores Amarillas</h1>
+
+          <div class="flower-decoration">🌼 🌻 🌼</div>
+
+          <p>
+            Las flores amarillas siempre me han recordado a ustedes: llenas de
+            luz, alegría y calidez.
+          </p>
+
+          <p>
+            Como los girasoles que siguen al sol, ustedes iluminan cada día con
+            su amistad y su cariño.
+          </p>
+
+          <p>
+            Hoy quería recordarles lo especiales que son para mí y lo afortunado
+            que me siento de tenerlas en mi vida.
+          </p>
+
+          <div class="flower-decoration">🌼 🌻 🌼</div>
+
+          <p class="signature">Con cariño,<br />Tu Ingeniero Favorito</p>
+        </div>
+      </div>
+
+      <div class="flores" id="flores"></div>
+      <div class="status stopped" id="status">
+        <span class="status-dot"></span>
+        <span class="status-text">Detenido</span>
+      </div>
+    </div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-25 0 150 100"
+      width="150"
+      height="100"
+    >
+      <defs>
+        <mask id="mask-petals">
+          <rect width="100" height="100" fill="hsl(0, 0%, 100%)" />
+          <g transform="translate(50 40)">
+            <g class="petals">
+              <circle r="11" fill="hsl(0, 0%, 0%)" />
+            </g>
+          </g>
+        </mask>
+      </defs>
+      <g transform="translate(50 98)">
+        <g class="stem" transform="scale(1 1)">
+          <g fill="#00FF00">
+            <g class="leaf" transform="rotate(45)">
+              <path d="M 0 0 c 20 -8 15 -32 0 -42 -15 10 -20 34 0 42" />
+            </g>
+            <g transform="scale(-1 1)">
+              <g class="leaf" transform="rotate(45)">
+                <path d="M 0 0 c 20 -8 15 -32 0 -42 -15 10 -20 34 0 42" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <g mask="url(#mask-petals)">
+        <g transform="translate(50 40)">
+          <g fill="#edef00">
+            <g class="petals">
+              <circle transform="translate(0 -14)" r="11" />
+              <circle transform="rotate(72) translate(0 -14)" r="11" />
+              <circle transform="rotate(144) translate(0 -14)" r="11" />
+              <circle transform="rotate(216) translate(0 -14)" r="11" />
+              <circle transform="rotate(288) translate(0 -14)" r="11" />
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- still unclear about the path accepted by anime.js -->
+      <path
+        id="path"
+        stroke="none"
+        fill="none"
+        d="M -25 -20 a 30 30 0 0 0 60 0 30 30 0 0 0 -60 0 30 30 0 0 1 -60 0 30 30 0 0 1 60 0"
+      />
+    </svg>
+
+    <svg id="bee" viewBox="-10.5 -10.5 21 21" style="width: 50px; height: auto">
+      <g transform="rotate(90) translate(0 -4)">
+        <g stroke="currentColor">
+          <circle fill="currentColor" r="4" stroke-width="2.5" />
+          <g
+            fill="none"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path transform="rotate(45) translate(0 -4)" d="M 0 0 v -3" />
+            <path transform="rotate(-45) translate(0 -4)" d="M 0 0 v -3" />
+            <g fill="hsl(200, 80%, 90%)">
+              <path
+                transform="rotate(15)"
+                d="M 0 0 h 7 a 3 3 0 0 1 0 6 q -4 0 -7 -6"
+              />
+              <path
+                transform="scale(-1 1) rotate(15)"
+                d="M 0 0 h 7 a 3 3 0 0 1 0 6 q -4 0 -7 -6"
+              />
+            </g>
+            <g fill="hsl(50, 80%, 50%)">
+              <path d="M 0 0 c 2 6 8 10 0 12 -8 -2 -2 -6 0 -12" />
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <script>
+      const path = anime.path("#path");
+
+      const timeline = anime.timeline({
+        easing: "easeInOutExpo",
+        duration: 1000,
+        complete: () => {
+          anime({
+            targets: ".leaf",
+            rotate: 40,
+            duration: 3000,
+            loop: true,
+            direction: "alternate",
+            easing: "easeInOutQuad",
+          });
+          anime({
+            targets: ".petals",
+            scale: 1.05,
+            duration: 6000,
+            loop: true,
+            direction: "alternate",
+            easing: "easeInOutQuad",
+          });
+        },
+      });
+
+      timeline.add({
+        targets: ".stem",
+        scale: [0, 1],
+      });
+
+      timeline.add({
+        targets: ".leaf",
+        rotate: [0, 45],
+      });
+      timeline.add(
+        {
+          targets: ".petals",
+          scale: [0, 1],
+        },
+        "-=1000"
+      );
+
+      timeline.add(
+        {
+          targets: "#bee",
+          opacity: [0, 1],
+        },
+        "-=750"
+      );
+
+      anime({
+        targets: "#bee",
+        translateX: path("x"),
+        translateY: path("y"),
+        rotate: path("angle"),
+        loop: true,
+        duration: 12500,
+        easing: "linear",
+      });
+    </script>
+    <div class="music-player">
+      <div class="player-title">
+        <i class="fas fa-music"></i>
+        <span>Reproductor</span>
+      </div>
+      <div class="controls">
+        <button class="btn play" id="playBtn" title="Reproducir">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="btn" id="pauseBtn" title="Pausar">
+          <i class="fas fa-pause"></i>
+        </button>
+        <button class="btn" id="stopBtn" title="Detener">
+          <i class="fas fa-stop"></i>
+        </button>
+      </div>
+      <div class="volume-container">
+        <i class="fas fa-volume-up"></i>
+        <input
+          type="range"
+          id="volume"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0.7"
+        />
+      </div>
+
+
+    <!-- Elemento de audio -->
+    <audio id="backgroundMusic" loop>
+      <!-- Música de ejemplo (SoundHelix) -->
+      <source src="/music/flores-amarillas.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.getElementById("backgroundMusic");
+        const playBtn = document.getElementById("playBtn");
+        const pauseBtn = document.getElementById("pauseBtn");
+        const stopBtn = document.getElementById("stopBtn");
+        const volumeControl = document.getElementById("volume");
+        const status = document.getElementById("status");
+        const statusText = status.querySelector(".status-text");
+
+        // Configurar el volumen inicial
+        audio.volume = volumeControl.value;
+
+        // Intentar reproducir automáticamente al cargar la página
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              // Reproducción exitosa
+              updateStatus("playing", "Reproduciendo");
+            })
+            .catch((error) => {
+              // Reproducción automática prevenida
+              updateStatus("stopped", "Haz clic en reproducir");
+              console.log("La reproducción automática fue prevenida: ", error);
+            });
+        }
+
+        // Controlar volumen
+        volumeControl.addEventListener("input", function () {
+          audio.volume = volumeControl.value;
+        });
+
+        // Botones de control
+        playBtn.addEventListener("click", function () {
+          audio.play();
+          updateStatus("playing", "Reproduciendo");
+        });
+
+        pauseBtn.addEventListener("click", function () {
+          audio.pause();
+          updateStatus("paused", "En pausa");
+        });
+
+        stopBtn.addEventListener("click", function () {
+          audio.pause();
+          audio.currentTime = 0;
+          updateStatus("stopped", "Detenido");
+        });
+
+        // Actualizar estado visual
+        function updateStatus(state, text) {
+          status.className = "status " + state;
+          statusText.textContent = text;
+        }
+      });
+    </script>
+    <script src="js/mensaje.js"></script>
+  </body>
+</html>

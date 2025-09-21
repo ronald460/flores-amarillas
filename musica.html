@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head> </head>
+  <body>
+    <div class="music-player">
+      <div class="player-title">
+        <i class="fas fa-music"></i>
+        <span>Reproductor</span>
+      </div>
+      <div class="controls">
+        <button class="btn play" id="playBtn" title="Reproducir">
+          <i class="fas fa-play"></i>
+        </button>
+        <button class="btn" id="pauseBtn" title="Pausar">
+          <i class="fas fa-pause"></i>
+        </button>
+        <button class="btn" id="stopBtn" title="Detener">
+          <i class="fas fa-stop"></i>
+        </button>
+      </div>
+      <div class="volume-container">
+        <i class="fas fa-volume-up"></i>
+        <input
+          type="range"
+          id="volume"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0.7"
+        />
+      </div>
+      <div class="status stopped" id="status">
+        <span class="status-dot"></span>
+        <span class="status-text">Detenido</span>
+      </div>
+    </div>
+
+    <!-- Elemento de audio -->
+    <audio id="backgroundMusic" loop>
+      <!-- Música de ejemplo (SoundHelix) -->
+      <source src="music/flores-amarillas.mp3" type="audio/mpeg" />
+    </audio>
+  </body>
+</html>
